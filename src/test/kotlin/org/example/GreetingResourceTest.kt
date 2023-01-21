@@ -18,8 +18,7 @@ class GreetingResourceTest {
             .post("/hello/auto")
         .then()
             .statusCode(400)
-            .body("title", `is`("Constraint Violation"))
-            .body("status", `is`(400))
+            .body("code", `is`("validation.failed"))
             .body("violations.size()", `is`(2))
     }
 
@@ -31,8 +30,9 @@ class GreetingResourceTest {
         .`when`()
             .post("/hello/manual")
         .then()
-            .statusCode(500)
-            .body("details", notNullValue())
+            .statusCode(400)
+            .body("code", `is`("validation.failed"))
+            .body("violations.size()", `is`(2))
     }
 
 }
